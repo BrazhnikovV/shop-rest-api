@@ -1,6 +1,7 @@
 <?php
 
 namespace app\controllers;
+use yii\filters\auth\HttpBasicAuth;
 
 class UserController extends \yii\rest\ActiveController
 {
@@ -32,14 +33,24 @@ class UserController extends \yii\rest\ActiveController
      */
     public function behaviors()
     {
+
         return [
                     [
                         'class' => \yii\filters\ContentNegotiator::className(),
                         'only' => ['index', 'create', 'error'],
                         'formats' => [
                             'application/json' => \yii\web\Response::FORMAT_JSON,
+                        ],
+                    ],
+                        'authenticator' => [
+                            'class' => HttpBasicAuth::className(),
+                            'auth'  => function ($username, $password) {
+                                return \app\models\Users::findOne([
+                                    'username' => $username,
+                                    'password' => $password,
+                                ]);
+                            }
                         ]
-                    ]
                 ];
     }
 
@@ -50,6 +61,6 @@ class UserController extends \yii\rest\ActiveController
      */
     public function actionError()
     {
-        return array('Error' => 'Error');
+        return array('Error' => \Yii::$app->getSecurity()->generateRandomString(12));
     }
 }

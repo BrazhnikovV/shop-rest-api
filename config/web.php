@@ -23,8 +23,9 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
+            'identityClass' => 'app\models\Users',
+            //'enableAutoLogin' => true,
+            'enableSession' => false
         ],
         'errorHandler' => [
             'errorAction' => 'user/error',
@@ -60,6 +61,7 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'user'],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'order'],
             ],
         ],
     ],
