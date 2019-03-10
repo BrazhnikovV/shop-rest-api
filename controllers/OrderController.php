@@ -1,6 +1,7 @@
 <?php
 
 namespace app\controllers;
+use yii\filters\Cors;
 use yii\filters\auth\HttpBasicAuth;
 
 class OrderController extends \yii\rest\ActiveController
@@ -28,6 +29,7 @@ class OrderController extends \yii\rest\ActiveController
             ],
         ];
     }
+
     /**
      * @inheritdoc
      */
@@ -35,13 +37,14 @@ class OrderController extends \yii\rest\ActiveController
     {
 
         return [
-            [
+            'contentNegotiator'=> [
                 'class' => \yii\filters\ContentNegotiator::className(),
                 'only' => ['index', 'create', 'error'],
                 'formats' => [
                     'application/json' => \yii\web\Response::FORMAT_JSON,
                 ],
             ],
+            /*
             'authenticator' => [
                 'class' => HttpBasicAuth::className(),
                 'auth'  => function ($username, $password) {
@@ -50,7 +53,30 @@ class OrderController extends \yii\rest\ActiveController
                         'password' => $password,
                     ]);
                 }
+            ],
+            */
+            'corsFilter' => [
+                'class' => Cors::className(),
+                'cors' => [
+                    'Origin' => ['*'],
+                    'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+                    'Access-Control-Request-Headers' => ['*'],
+                ],
             ]
         ];
+    }
+
+    public function checkAccess($action, $model = null, $params = [])
+    {
+        $queryParams = \Yii::$app->request->queryParams;
+
+        if ( !array_key_exists('token', $queryParams ) ) {
+            throw new NotFoundHttpException("Token not found");
+        }
+        else {
+            if ( \app\models\Users::findIdentityByAccessToken($queryParams['token']) === NULL ) {
+                throw new NotFoundHttpException("Token not found");
+            }
+        }
     }
 }
