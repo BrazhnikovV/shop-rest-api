@@ -84,6 +84,21 @@ class Users extends \yii\db\ActiveRecord  implements \yii\web\IdentityInterface
     }
 
     /**
+     * Finds an identity by the given ID.
+     * @param $username -
+     * @param $password -
+     * @return
+     */
+    public static function authentication($username,$password)
+    {
+        return static::findOne([
+            'username' => $username,
+            'password' => $password,
+            'status' => self::STATUS_ACTIVE
+        ]);
+    }
+
+    /**
      * Finds an identity by the given token.
      * @param mixed $token the token to be looked for
      * @param mixed $type the type of the token. The value of this parameter depends on the implementation.
