@@ -1,7 +1,9 @@
 <?php
 
 namespace app\controllers;
-use yii\filters\auth\HttpBasicAuth;
+use yii\filters\Cors;
+use yii\filters\auth\CompositeAuth;
+use yii\filters\auth\QueryParamAuth;
 
 class UserController extends \yii\rest\ActiveController
 {
@@ -42,15 +44,21 @@ class UserController extends \yii\rest\ActiveController
                             'application/json' => \yii\web\Response::FORMAT_JSON,
                         ],
                     ],
-                        'authenticator' => [
-                            'class' => HttpBasicAuth::className(),
-                            'auth'  => function ($username, $password) {
-                                return \app\models\Users::findOne([
-                                    'username' => $username,
-                                    'password' => $password,
-                                ]);
-                            }
-                        ]
+                    'authenticator' => [
+                        'class' => CompositeAuth::className(),
+                        'authMethods' => [
+                            QueryParamAuth::className(),
+                        ],
+                        'except' => ['error'],
+                    ],
+                    'corsFilter' => [
+                        'class' => Cors::className(),
+                        'cors' => [
+                            'Origin' => ['*'],
+                            'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+                            'Access-Control-Request-Headers' => ['*'],
+                        ],
+                    ]
                 ];
     }
 
@@ -61,6 +69,6 @@ class UserController extends \yii\rest\ActiveController
      */
     public function actionError()
     {
-        return array('Error' => \Yii::$app->getSecurity()->generateRandomString(12));
+        return new \yii\web\NotFoundHttpException("Not found.", 404 );
     }
 }

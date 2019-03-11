@@ -65,18 +65,4 @@ class OrderController extends \yii\rest\ActiveController
             ]
         ];
     }
-
-    public function checkAccess($action, $model = null, $params = [])
-    {
-        $queryParams = \Yii::$app->request->queryParams;
-
-        if ( !array_key_exists('token', $queryParams ) ) {
-            throw new NotFoundHttpException("Token not found");
-        }
-        else {
-            if ( \app\models\Users::findIdentityByAccessToken($queryParams['token']) === NULL ) {
-                throw new NotFoundHttpException("Token not found");
-            }
-        }
-    }
 }
