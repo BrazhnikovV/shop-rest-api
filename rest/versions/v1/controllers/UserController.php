@@ -10,6 +10,20 @@ use yii\rest\Controller;
  */
 class UserController extends Controller
 {
+    public function behaviors()
+    {
+        return [
+            'corsFilter' => [
+                'class' => \yii\filters\Cors::className(),
+                'cors' => [
+                    'Origin' => ['*'],
+                    'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+                    'Access-Control-Request-Headers' => ['*'],
+                ],
+            ]
+        ];
+    }
+
     /**
      * This method implemented to demonstrate the receipt of the token.
      * Do not use it on production systems.

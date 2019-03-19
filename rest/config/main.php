@@ -53,7 +53,7 @@ return [
                         'v1/post', 'v1/comment', 'v1/orders'
                     ]
                 ],
-                //'OPTIONS v1/user/login' => 'v1/user/login',
+                'OPTIONS v1/user/login' => 'v1/user/login',
                 'POST v1/user/login' => 'v1/user/login',
             ],
         ],
