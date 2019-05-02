@@ -50,11 +50,13 @@ return [
             'rules' => [
                 ['class' => 'yii\rest\UrlRule',
                     'controller' => [
-                        /*'v1/post', 'v1/comment',*/ 'v1/categories',  'v1/orders'
+                        'v1/categories', 'v1/orders', 'v1/menu'
                     ]
                 ],
+                'OPTIONS v1/menu' => 'v1/menu',
+                'POST v1/menu' => 'v1/menu',
                 'OPTIONS v1/user/login' => 'v1/user/login',
-                'POST v1/user/login' => 'v1/user/login',
+                'POST v1/user/login' => 'v1/user/login'
             ],
         ],
     ],

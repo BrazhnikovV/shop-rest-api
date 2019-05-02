@@ -6,24 +6,25 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "category".
+ * This is the model class for table "menu".
  *
  * @property integer $id
  * @property string  $name
+ * @property string  $url
  * @property string  $description
  * @property string  $hidden
  * @property integer $nesting
  * @property integer $created_at
  * @property integer $updated_at
  */
-class Categories extends ActiveRecord
+class Menu extends ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return '{{%category}}';
+        return '{{%menu}}';
     }
 
     /**
@@ -42,8 +43,8 @@ class Categories extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'description'], 'required'],
-            [['name', 'description'], 'string'],
+            [['name', 'url'], 'required'],
+            [['name','url'], 'string'],
             [['nesting'], 'integer'],
             [['hidden'], 'in', 'range' => [0, 1]],
             [['name'], 'string', 'max' => 128],
@@ -56,6 +57,7 @@ class Categories extends ActiveRecord
         return [
             'id',
             'name',
+            'url',
             'description',
             'hidden',
             'nesting',
@@ -74,8 +76,9 @@ class Categories extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'id'   => 'ID',
             'name' => 'Name',
+            'url'  => 'Url',
             'description' => 'Description',
             'hidden' => 'Hidden',
             'nesting' => 'Nesting',
