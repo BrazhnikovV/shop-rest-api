@@ -5,9 +5,9 @@ use yii\data\ActiveDataProvider;
 use yii\filters\auth\QueryParamAuth;
 use yii\rest\ActiveController;
 
-class OrdersController extends ActiveController
+class CategoriesController extends ActiveController
 {
-    public $modelClass = 'common\models\Orders';
+    public $modelClass = 'common\models\Categories';
 
     public function behaviors()
     {
@@ -43,8 +43,8 @@ class OrdersController extends ActiveController
                         ]);
                         $dataProvider = new ActiveDataProvider(['query' => $query]);
 
-                        $model->setAttribute('title', @$_GET['title']);
-                        $query->andFilterWhere(['like', 'title', $model->title]);
+                        $model->setAttribute('name', @$_GET['name']);
+                        $query->andFilterWhere(['like', 'name', $model->name]);
 
                         return $dataProvider;
                     }
