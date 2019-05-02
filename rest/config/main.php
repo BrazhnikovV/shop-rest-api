@@ -50,7 +50,7 @@ return [
             'rules' => [
                 ['class' => 'yii\rest\UrlRule',
                     'controller' => [
-                        'v1/categories', 'v1/orders', 'v1/products'
+                        'v1/categories', 'v1/orders', 'v1/products', 'v1/partners'
                     ]
                 ],
                 'OPTIONS v1/user/login' => 'v1/user/login',
