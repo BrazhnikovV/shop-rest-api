@@ -6,16 +6,16 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "tbl_post".
+ * This is the model class for table "orders".
  *
  * @property integer $id
- * @property string $title
- * @property string $content
- * @property string $tags
- * @property integer $status
+ * @property integer $user_id
+ * @property string  $name
+ * @property string  $description
+ * @property string  $price
+ * @property integer $code
  * @property integer $created_at
  * @property integer $updated_at
- * @property integer $author_id
  */
 class Orders extends ActiveRecord
 {
@@ -47,17 +47,17 @@ class Orders extends ActiveRecord
     {
         return [
             [
-                ['title', 'content'],
+                ['name', 'description'],
                 'filter',
                 'filter' => function ($value) {
                     return \Yii::$app->formatter->asHtml($value);
                 }
             ],
-            [['title', 'content', 'status'], 'required'],
-            [['content'], 'string'],
+            [['name', 'description', 'status'], 'required'],
+            [['description'], 'string'],
             [['price'], 'integer'],
             [['status'], 'in', 'range' => [self::STATUS_DRAFT, self::STATUS_PUBLISHED]],
-            [['title'], 'string', 'max' => 128]
+            [['name'], 'string', 'max' => 128]
         ];
     }
 
@@ -72,8 +72,8 @@ class Orders extends ActiveRecord
     {
         return [
             'id',
-            'title',
-            'content',
+            'name',
+            'description',
             'price',
             'status',
             'author',
@@ -93,19 +93,19 @@ class Orders extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
-            'content' => 'Content',
+            'name' => 'Name',
+            'description' => 'Description',
             'price' => 'Price',
             'status' => 'Status',
             'created_at' => 'created',
             'updated_at' => 'updated',
-            'author_id' => 'Author ID',
+            'user_id' => 'User ID',
         ];
     }
 
     public function getAuthor()
     {
-        return $this->hasOne(User::className(), ['id' => 'author_id']);
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
     public function getComments()
@@ -117,8 +117,8 @@ class Orders extends ActiveRecord
     {
         if (parent::beforeSave($insert)) {
             if ($insert) {
-                if (empty($this->author_id)) {
-                    $this->author_id = \Yii::$app->user->identity->getId();
+                if (empty($this->user_id)) {
+                    $this->user_id = \Yii::$app->user->identity->getId();
                 }
             }
             return true;
