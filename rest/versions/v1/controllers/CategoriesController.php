@@ -1,14 +1,27 @@
 <?php
 namespace rest\versions\v1\controllers;
 
+use yii\rest\ActiveController;
 use yii\data\ActiveDataProvider;
 use yii\filters\auth\QueryParamAuth;
-use yii\rest\ActiveController;
 
+/**
+ * CategoriesController
+ * @version 1.0.1
+ * @package rest\versions\v1\controllers
+ */
 class CategoriesController extends ActiveController
 {
+    /**
+     *  @access public
+     *  @var $modelClass - класс модели
+     */
     public $modelClass = 'common\models\Categories';
 
+    /**
+     * Добавляем поведения для аутентификации, включения CORS
+     * @return array
+     */
     public function behaviors()
     {
         $behaviors = parent::behaviors();
@@ -26,6 +39,10 @@ class CategoriesController extends ActiveController
         return $behaviors;
     }
 
+    /**
+     * actions controller
+     * @return array
+     */
     public function actions()
     {
         return array_merge(
@@ -35,8 +52,7 @@ class CategoriesController extends ActiveController
                     'class' => 'yii\rest\IndexAction',
                     'modelClass' => $this->modelClass,
                     'checkAccess' => [$this, 'checkAccess'],
-                    'prepareDataProvider' => function ($action) {
-                        /* @var $model Post */
+                    'prepareDataProvider' => function ( $action ) {
                         $model = new $this->modelClass;
                         $query = $model::find()->orderBy([
                             'id' => SORT_DESC
@@ -54,6 +70,17 @@ class CategoriesController extends ActiveController
                     'modelClass' => $this->modelClass,
                     'checkAccess' => [$this, 'checkAccess'],
                     'scenario' => $this->createScenario,
+                ],
+                'update' => [
+                    'class' => 'yii\rest\UpdateAction',
+                    'modelClass' => $this->modelClass,
+                    'checkAccess' => [$this, 'checkAccess'],
+                    'scenario' => $this->updateScenario,
+                ],
+                'delete' => [
+                    'class' => 'yii\rest\DeleteAction',
+                    'modelClass' => $this->modelClass,
+                    'checkAccess' => [$this, 'checkAccess'],
                 ]
             ]
         );
