@@ -45,7 +45,7 @@ class Categories extends ActiveRecord
             [['name', 'description'], 'required'],
             [['name', 'description'], 'string'],
             [['nesting'], 'integer'],
-            [['hidden'], 'in', 'range' => [0, 1]],
+            [['hidden'], 'boolean'],
             [['name'], 'string', 'min' => 4, 'max' => 128],
             [['description'], 'string','min' => 4, 'max' => 512]
         ];

@@ -45,6 +45,7 @@ class Products extends ActiveRecord
         return [
             [['name', 'price', 'code'], 'required'],
             [['description','name'], 'string'],
+            [['hidden'], 'boolean'],
             [['price'], 'integer'],
         ];
     }

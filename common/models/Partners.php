@@ -44,7 +44,7 @@ class Partners extends ActiveRecord
         return [
             [['name', 'url', 'description'], 'required'],
             [['description', 'url', 'name'], 'string'],
-            [['hidden'], 'integer'],
+            [['hidden'], 'boolean'],
         ];
     }
 

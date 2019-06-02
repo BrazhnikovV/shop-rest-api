@@ -3,7 +3,7 @@ namespace rest\versions\v1\controllers;
 
 use yii\rest\ActiveController;
 use yii\data\ActiveDataProvider;
-use yii\filters\auth\QueryParamAuth;
+use yii\filters\auth\HttpBasicAuth;
 
 /**
  * Class OrdersController
@@ -26,15 +26,8 @@ class OrdersController extends ActiveController
     {
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
-            'class' => QueryParamAuth::className(),
-        ];
-        $behaviors['corsFilter'] = [
-            'class' => \yii\filters\Cors::className(),
-            'cors' => [
-                'Origin' => ['*'],
-                'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
-                'Access-Control-Request-Headers' => ['*'],
-            ],
+            'class' => HttpBasicAuth::className(),
+            'except' => ['options']
         ];
         return $behaviors;
     }
