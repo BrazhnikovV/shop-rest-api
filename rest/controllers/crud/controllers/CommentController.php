@@ -1,5 +1,5 @@
 <?php
-namespace rest\versions\v1\controllers;
+namespace rest\controllers\crud\controllers;
 
 use yii\filters\auth\QueryParamAuth;
 use yii\rest\ActiveController;

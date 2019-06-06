@@ -1,5 +1,5 @@
 <?php
-namespace rest\versions\v1\controllers;
+namespace rest\controllers\crud\controllers;
 
 use common\models\Users;
 use yii\rest\Controller;
@@ -36,7 +36,9 @@ class UserController extends Controller
         $model = new LoginForm();
 
         if ( $model->load( \Yii::$app->getRequest()->getBodyParams(), '' ) && $model->login() ) {
-            return \Yii::$app->user->identity->getAuthKey();
+            return array (
+                'auth_key' => \Yii::$app->user->identity->getAuthKey(),
+                'username' => $model->username );
         } else {
             return $model;
         }

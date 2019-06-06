@@ -122,6 +122,13 @@ class User extends ActiveRecord implements IdentityInterface , RateLimitInterfac
     /**
      * @inheritdoc
      */
+    public function getUserName()
+    {
+        return $this->username;
+    }
+    /**
+     * @inheritdoc
+     */
     public function validateAuthKey($authKey)
     {
         return $this->getAuthKey() === $authKey;

@@ -1,5 +1,5 @@
 <?php
-namespace rest\versions\v1\controllers;
+namespace rest\controllers\crud\controllers;
 
 use yii\rest\ActiveController;
 use yii\data\ActiveDataProvider;

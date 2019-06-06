@@ -12,7 +12,7 @@ use yii\db\ActiveRecord;
  * @property string  $name
  * @property string  $description
  * @property string  $hidden
- * @property integer $nesting
+ * @property integer $parent_id
  * @property integer $created_at
  * @property integer $updated_at
  */
@@ -44,7 +44,7 @@ class Categories extends ActiveRecord
         return [
             [['name', 'description'], 'required'],
             [['name', 'description'], 'string'],
-            [['nesting'], 'integer'],
+            [['parent_id'], 'integer'],
             [['hidden'], 'boolean'],
             [['name'], 'string', 'min' => 4, 'max' => 128],
             [['description'], 'string','min' => 4, 'max' => 512]
@@ -58,7 +58,7 @@ class Categories extends ActiveRecord
             'name',
             'description',
             'hidden',
-            'nesting',
+            'parent_id',
             'created_at' => function () {
                 return date('d-m-y H:i', $this->created_at);
             },
@@ -78,7 +78,7 @@ class Categories extends ActiveRecord
             'name' => 'Name',
             'description' => 'Description',
             'hidden' => 'Hidden',
-            'nesting' => 'Nesting',
+            'parent_id' => 'Nesting',
             'created_at' => 'created',
             'updated_at' => 'updated',
         ];

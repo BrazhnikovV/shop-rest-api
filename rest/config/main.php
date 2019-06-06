@@ -13,10 +13,10 @@ return [
     'bootstrap' => ['log'],
     'modules' => [
         'v1' => [
-            'class' => 'rest\versions\v1\RestModule'
+            'class' => 'rest\controllers\crud\RestCrudModule'
         ],
         'v2' => [
-            'class' => 'rest\versions\v2\RestModule'
+            'class' => 'rest\controllers\read\RestReadModule'
         ],
     ],
     'components' => [
@@ -50,7 +50,8 @@ return [
             'rules' => [
                 ['class' => 'yii\rest\UrlRule',
                     'controller' => [
-                        'v1/categories', 'v1/orders', 'v1/products', 'v1/partners', 'v1/users'
+                        'v1/categories', 'v1/orders', 'v1/products', 'v1/partners', 'v1/users',
+                        'v2/categories',
                     ]
                 ],
                 'OPTIONS v1/user/login' => 'v1/user/login',

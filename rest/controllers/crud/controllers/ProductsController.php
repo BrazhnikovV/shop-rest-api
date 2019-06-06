@@ -1,22 +1,22 @@
 <?php
-namespace rest\versions\v1\controllers;
+namespace rest\controllers\crud\controllers;
 
 use yii\rest\ActiveController;
 use yii\data\ActiveDataProvider;
 use yii\filters\auth\HttpBasicAuth;
 
 /**
- * CategoriesController
+ * Class ProductsController
  * @version 1.0.1
  * @package rest\versions\v1\controllers
  */
-class CategoriesController extends ActiveController
+class ProductsController extends ActiveController
 {
     /**
      *  @access public
      *  @var $modelClass - класс модели
      */
-    public $modelClass = 'common\models\Categories';
+    public $modelClass = 'common\models\Products';
 
     /**
      * Добавляем поведения для аутентификации, включения CORS
@@ -25,10 +25,12 @@ class CategoriesController extends ActiveController
     public function behaviors()
     {
         $behaviors = parent::behaviors();
+
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
             'except' => ['options']
         ];
+
         return $behaviors;
     }
 
