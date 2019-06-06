@@ -1,8 +1,10 @@
 <?php
 namespace rest\versions\v1\controllers;
 
-use common\models\LoginForm;
+use common\models\Users;
 use yii\rest\Controller;
+use common\models\LoginForm;
+use common\models\RegistrForm;
 
 /**
  * Class UserController
@@ -33,10 +35,48 @@ class UserController extends Controller
     {
         $model = new LoginForm();
 
-        if ($model->load(\Yii::$app->getRequest()->getBodyParams(), '') && $model->login()) {
+        if ( $model->load( \Yii::$app->getRequest()->getBodyParams(), '' ) && $model->login() ) {
             return \Yii::$app->user->identity->getAuthKey();
         } else {
             return $model;
         }
+    }
+
+    /**
+     * This method
+     * @return
+     */
+    public function actionRegister() {
+
+        $model = new RegistrForm();
+
+        if ( $model->load( \Yii::$app->getRequest()->getBodyParams(), '' ) && $model->register() ) {
+
+            $user = $this->createUser( $model );
+            if ( $user->save() ) {
+                return $user->attributes;
+            }
+            else {
+                return $user->errors;
+            }
+
+        } else {
+            return $model;
+        }
+    }
+
+    /**
+     * This method
+     * @return
+     */
+    private function createUser( $model ) {
+        $user = new Users();
+        $user->username = $model->username;
+        $user->email    = $model->email;
+        $user->status   = $model->status;
+        $user->auth_key = bin2hex( random_bytes(16 ) );
+        $user->password_hash = password_hash( $model->password, PASSWORD_BCRYPT );
+
+        return $user;
     }
 }
