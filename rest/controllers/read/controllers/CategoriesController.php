@@ -2,13 +2,11 @@
 namespace rest\controllers\read\controllers;
 
 use yii\rest\ActiveController;
-use yii\data\ActiveDataProvider;
-use yii\filters\auth\HttpBasicAuth;
 
 /**
  * CategoriesController
  * @version 1.0.1
- * @package rest\versions\v1\controllers
+ * @package rest\controllers\read\controllers
  */
 class CategoriesController extends ActiveController
 {
@@ -29,32 +27,32 @@ class CategoriesController extends ActiveController
     }
 
     /**
-     * actions controller
-     * @return array
+     * This method implemented
      */
-    public function actions()
-    {
-        return array_merge(
-            parent::actions(),
-            [
-                'index' => [
-                    'class' => 'yii\rest\IndexAction',
-                    'modelClass' => $this->modelClass,
-                    'checkAccess' => [$this, 'checkAccess'],
-                    'prepareDataProvider' => function ( $action ) {
-                        $model = new $this->modelClass;
-                        $query = $model::find()->orderBy([
-                            'id' => SORT_DESC
-                        ]);
-                        $dataProvider = new ActiveDataProvider(['query' => $query]);
+    public function actionList() {
 
-                        $model->setAttribute('name', @$_GET['name']);
-                        $query->andFilterWhere(['like', 'name', $model->name]);
+        $all_categories = array();
+        $parent_categories = Categories::find()->where( ['=', 'parent_id', 0] )->all();
+        foreach ( $parent_categories as $key => $parent_category ) {
 
-                        return $dataProvider;
-                    }
-                ]
-            ]
-        );
+            $children = Categories::find()->where( ['=', 'parent_id', $parent_category->id] )->all();
+            foreach ( $children as $key_children => $child ) {
+
+                $all_categories[$key]['children'][$key_children]['category'] = $child;
+                $all_categories[$key]['children'][$key_children]['products'] = $child->products;
+            }
+            $all_categories[$key]['parent']   = $parent_category;
+        }
+
+        return $all_categories;
+    }
+
+    /**
+     * This method implemented
+     */
+    public function actionNoparrentlist() {
+        $model = new $this->modelClass;
+        $categories = $model::find()->where( ['!=', 'parent_id', 0] )->all();
+        return $categories;
     }
 }

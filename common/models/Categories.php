@@ -36,6 +36,11 @@ class Categories extends ActiveRecord
         ];
     }
 
+    public function getProducts()
+    {
+        return $this->hasMany( Products::className(), ['category_id' => 'id']);
+    }
+
     /**
      * @inheritdoc
      */
@@ -74,13 +79,13 @@ class Categories extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'name' => 'Name',
+            'id'          => 'ID',
+            'name'        => 'Name',
             'description' => 'Description',
-            'hidden' => 'Hidden',
-            'parent_id' => 'Nesting',
-            'created_at' => 'created',
-            'updated_at' => 'updated',
+            'hidden'      => 'Hidden',
+            'parent_id'   => 'Nesting',
+            'created_at'  => 'created',
+            'updated_at'  => 'updated',
         ];
     }
 

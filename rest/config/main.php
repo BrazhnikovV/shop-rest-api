@@ -51,13 +51,20 @@ return [
                 ['class' => 'yii\rest\UrlRule',
                     'controller' => [
                         'v1/categories', 'v1/orders', 'v1/products', 'v1/partners', 'v1/users',
-                        'v2/categories',
+                        //'v2/categories/list',
                     ]
                 ],
-                'OPTIONS v1/user/login' => 'v1/user/login',
-                'POST v1/user/login' => 'v1/user/login',
+                'OPTIONS v1/user/login'    => 'v1/user/login',
+                'POST v1/user/login'       => 'v1/user/login',
+
                 'OPTIONS v1/user/register' => 'v1/user/register',
-                'POST v1/user/register' => 'v1/user/register'
+                'POST v1/user/register'    => 'v1/user/register',
+
+                'OPTIONS v2/categories/list' => 'v2/categories/list',
+                'GET v2/categories/list' => 'v2/categories/list',
+
+                'OPTIONS v2/categories/noparrentlist' => 'v2/categories/noparrentlist',
+                'GET v2/categories/noparrentlist' => 'v2/categories/noparrentlist'
             ],
         ],
     ],

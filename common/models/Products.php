@@ -9,13 +9,14 @@ use yii\db\ActiveRecord;
  * This is the model class for table "products".
  *
  * @property integer $id
- * @property string $title
- * @property string $content
- * @property string $tags
- * @property integer $status
+ * @property integer $category_id
+ * @property string  $name
+ * @property string  $description
+ * @property integer $price
+ * @property string  $code
+ * @property integer $hidden
  * @property integer $created_at
  * @property integer $updated_at
- * @property integer $author_id
  */
 class Products extends ActiveRecord
 {
@@ -38,15 +39,23 @@ class Products extends ActiveRecord
     }
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCategories()
+    {
+        return $this->hasOne( Categories::className(), ['id' => 'category_id']);
+    }
+
+    /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['name', 'price', 'code'], 'required'],
+            [['name', 'price', 'code','category_id'], 'required'],
             [['description','name'], 'string'],
             [['hidden'], 'boolean'],
-            [['price'], 'integer'],
+            [['price','category_id'], 'integer'],
         ];
     }
 
@@ -54,6 +63,7 @@ class Products extends ActiveRecord
     {
         return [
             'id',
+            'category_id',
             'name',
             'description',
             'price',
@@ -75,6 +85,7 @@ class Products extends ActiveRecord
     {
         return [
             'id'          => 'ID',
+            'category_id' => 'CategoryID',
             'name'        => 'Name',
             'description' => 'Description',
             'price'       => 'Price',
