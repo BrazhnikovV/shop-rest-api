@@ -60,7 +60,9 @@ return [
 
                 'OPTIONS v2/categories/list' => 'v2/categories/list',                   'GET v2/categories/list' => 'v2/categories/list',
                 'OPTIONS v2/categories/noparrentlist' => 'v2/categories/noparrentlist', 'GET v2/categories/noparrentlist' => 'v2/categories/noparrentlist',
-                'OPTIONS v2/products/list' => 'v2/products/list',                       'GET v2/products/list' => 'v2/products/list'
+                'OPTIONS v2/products/list'      => 'v2/products/list',                  'GET v2/products/list'      => 'v2/products/list',
+                'OPTIONS v2/products/upload'    => 'v2/products/upload',                'POST v2/products/upload'   => 'v2/products/upload',
+                'OPTIONS v2/products/list/<id>' => 'v2/products/list',                  'GET v2/products/list/<id>' => 'v2/products/list'
             ],
         ],
     ],
