@@ -1,6 +1,7 @@
 <?php
 namespace rest\controllers\read\controllers;
 
+use common\models\Categories;
 use yii\rest\ActiveController;
 
 /**
