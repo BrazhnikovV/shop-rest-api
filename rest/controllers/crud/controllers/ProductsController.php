@@ -61,7 +61,7 @@ class ProductsController extends ActiveController
                     }
                 ],
                 'create' => [
-                    'class' => 'yii\rest\CreateAction',
+                    'class' => 'common\actions\CreateActionWithSaveFiles',
                     'modelClass' => $this->modelClass,
                     'checkAccess' => [$this, 'checkAccess'],
                     'scenario' => $this->createScenario,

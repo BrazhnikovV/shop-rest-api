@@ -1,6 +1,7 @@
 <?php
 namespace rest\controllers\read\controllers;
 
+use common\models\ProductImages;
 use yii\web\UploadedFile;
 use common\models\Products;
 use common\models\UploadForm;
@@ -48,6 +49,7 @@ class ProductsController extends ActiveController
     public function actionUpload() {
 
         $model = new UploadForm();
+        $product_images = new ProductImages();
 
         if ( \Yii::$app->request->isPost ) {
             $model->files = UploadedFile::getInstancesByName( 'files' );

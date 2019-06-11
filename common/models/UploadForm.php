@@ -5,10 +5,9 @@ namespace common\models;
 use yii\base\Model;
 
 /**
- * This is the model class for table "category".
+ * This is the model
  *
- * @property integer $id
- * @property string  $name
+ * @property array $files
  */
 class UploadForm extends Model
 {

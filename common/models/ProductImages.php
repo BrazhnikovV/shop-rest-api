@@ -6,39 +6,29 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "products".
+ * This is the model class for table "product_images".
  *
  * @property integer $id
- * @property integer $category_id
+ * @property integer $product_id
  * @property string  $name
  * @property string  $description
- * @property integer $price
- * @property string  $code
- * @property integer $hidden
  * @property integer $created_at
  * @property integer $updated_at
  */
-class Products extends ActiveRecord
+class ProductImages extends ActiveRecord
 {
-    /**
-     * @access public
-     * @var $fields -
-     */
-    public $files;
-
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return '{{%products}}';
+        return '{{%product_images}}';
     }
 
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             TimestampBehavior::className(),
         ];
@@ -47,8 +37,7 @@ class Products extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCategories()
-    {
+    public function getCategories() {
         return $this->hasOne( Categories::className(), ['id' => 'category_id']);
     }
 
@@ -58,10 +47,9 @@ class Products extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'price', 'code','category_id'], 'required'],
+            [['name','product_id'], 'required'],
             [['description','name'], 'string'],
-            [['hidden'], 'boolean'],
-            [['price','category_id'], 'integer'],
+            [['product_id'], 'integer'],
         ];
     }
 
@@ -69,12 +57,9 @@ class Products extends ActiveRecord
     {
         return [
             'id',
-            'category_id',
+            'product_id',
             'name',
             'description',
-            'price',
-            'code',
-            'hidden',
             'created_at' => function () {
                 return date('d-m-y H:i', $this->created_at);
             },
@@ -91,20 +76,22 @@ class Products extends ActiveRecord
     {
         return [
             'id'          => 'ID',
-            'category_id' => 'CategoryID',
+            'product_id'  => 'ProductID',
             'name'        => 'Name',
             'description' => 'Description',
-            'price'       => 'Price',
-            'code'        => 'Code',
-            'hidden'      => 'hidden',
             'created_at'  => 'created',
             'updated_at'  => 'updated',
         ];
     }
 
-    public function beforeSave($insert)
-    {
-        if (parent::beforeSave($insert)) {
+
+    /**
+     * @param bool $insert
+     * @return bool
+     */
+    public function beforeSave( $insert ) {
+
+        if ( parent::beforeSave( $insert ) ) {
             if ($insert) {
 
             }
