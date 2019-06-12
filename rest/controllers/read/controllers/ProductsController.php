@@ -1,10 +1,7 @@
 <?php
 namespace rest\controllers\read\controllers;
 
-use common\models\ProductImages;
-use yii\web\UploadedFile;
 use common\models\Products;
-use common\models\UploadForm;
 use yii\rest\ActiveController;
 
 /**
@@ -41,30 +38,5 @@ class ProductsController extends ActiveController
             $products = Products::find()->where( ['=', 'category_id', $id] )->all();
         }
         return $products;
-    }
-
-    /**
-     * This method implemented
-     */
-    public function actionUpload() {
-
-        $model = new UploadForm();
-        $product_images = new ProductImages();
-
-        if ( \Yii::$app->request->isPost ) {
-            $model->files = UploadedFile::getInstancesByName( 'files' );
-
-            if ( $model->files && $model->validate() ) {
-                $saves = array();
-                foreach ( $model->files as $key => $file ) {
-                    $filename = $file->getBaseName() . '.' . $file->getExtension();
-                    $saves[$filename] = $file->saveAs( 'uploads/' . $filename );
-                }
-                return $saves;
-            }
-            else {
-                return $model->errors;
-            }
-        }
     }
 }

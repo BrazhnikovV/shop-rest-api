@@ -11,9 +11,9 @@ use yii\db\ActiveRecord;
  * @property integer $id
  * @property integer $product_id
  * @property string  $name
- * @property string  $description
+ * @property string  $type
+ * @property integer $size
  * @property integer $created_at
- * @property integer $updated_at
  */
 class ProductImages extends ActiveRecord
 {
@@ -35,21 +35,15 @@ class ProductImages extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCategories() {
-        return $this->hasOne( Categories::className(), ['id' => 'category_id']);
-    }
-
-    /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
             [['name','product_id'], 'required'],
-            [['description','name'], 'string'],
-            [['product_id'], 'integer'],
+            [['type','name'], 'string'],
+            [['product_id', 'size'], 'integer'],
+            [['updated_at'], 'safe'],
         ];
     }
 
@@ -59,12 +53,13 @@ class ProductImages extends ActiveRecord
             'id',
             'product_id',
             'name',
-            'description',
+            'type',
+            'size',
             'created_at' => function () {
                 return date('d-m-y H:i', $this->created_at);
             },
             'updated_at' => function () {
-                return date('d-m-y H:i', $this->updated_at);
+                return date('d-m-y H:i', $this->created_at);
             },
         ];
     }
@@ -78,9 +73,10 @@ class ProductImages extends ActiveRecord
             'id'          => 'ID',
             'product_id'  => 'ProductID',
             'name'        => 'Name',
-            'description' => 'Description',
+            'type'        => 'Type',
+            'size'        => 'Size',
             'created_at'  => 'created',
-            'updated_at'  => 'updated',
+            'updated_at'  => 'updated_at',
         ];
     }
 

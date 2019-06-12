@@ -14,7 +14,7 @@ class UploadForm extends Model
     /**
      * @var UploadedFile file attribute
      */
-    public $files;
+    public $files = array();
 
     /**
      * @return array the validation rules.
